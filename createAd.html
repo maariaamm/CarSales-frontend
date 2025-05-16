@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/src/style.scss">
+</head>
+<body>
+    <main>
+        <form id="upload-form" enctype="multipart/form-data">
+             <input type="text" name="brand" placeholder="Brand" required>
+            <input type="text" name="model" placeholder="Model" required>
+            <input type="text" name="Description" placeholder="Description" required>
+            <input type="number" name="year" placeholder="Year" required>
+            <input type="text" name="fuelType" placeholder="Fuel Type" required>
+            <input type="number" name="price" placeholder="Price" required>
+            <input type="file" name="imageUrl" required>
+            <button class="add-btn" type="submit">Upload ad</button>
+          </form>
+          <script type="module" src="/src/main.js"></script>
+
+    </main>
+</body>
+</html>

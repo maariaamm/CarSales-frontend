@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration page</title>
     <link rel="stylesheet" href="/src/style.scss">
-
 </head>
 <body>
     <main>
         <h2>Register account!</h2>
-        <div class="Register-form">
-          <input type="text" name="username" placeholder="Enter username">
-          <input type="email" name="email" placeholder="Enter your Email">
-          <input type="password" name="password" placeholder="Enter your password">
-          <button class="register-btn" type="submit" value="Register">Create account</button>
-        </div>
-
-
+    <form id="register-form" class="Register-form">
+        <input type="text" name="username" placeholder="Enter username" required>
+        <input type="email" name="email" placeholder="Enter your Email" required>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        <button class="register-btn" type="submit">Create account</button>
+    </form>
 
 
 
