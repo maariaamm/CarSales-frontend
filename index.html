@@ -8,21 +8,25 @@
 </head>
 <body>
   <main>
-        <div class="background-img">
-        <img src="https://hips.hearstapps.com/hmg-prod/images/2022-porsche-macan-101-1651084695.jpg?crop=0.574xw:0.483xh;0.327xw,0.358xh&resize=1200:*"
-          alt="image of a porche macan">
-          </div>
-        <br>
-        <div class="nav">
-          <a class="active" href="#background-img">Homepage</a>
-          <a href="/register.html">Create account</a>
-          <a href="#carAdscontainer">All cars for sale</a>
-          <a href="/createAd.html">Upload car Ad</a>
-          <a href="/login.html">Sign in</a>
-        </div>
-        <h1>Check our latest car sales!</h1>
-        <div id="carAdscontainer"></div>
-        <script type="module" src="/src/main.js"></script>
-    </main>
+    <div class="nav">
+      <a href="#carAdscontainer">All cars for sale</a>
+      <a href="/createAd.html" class="auth-required">Upload car Ad</a>
+      <a href="/login.html" class="auth-toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span>Sign in / register account</span>
+      </a>
+    </div>
+    <div class="background-img">
+      <img src="https://hips.hearstapps.com/hmg-prod/images/2022-porsche-macan-101-1651084695.jpg?crop=0.574xw:0.483xh;0.327xw,0.358xh&resize=1200:*"
+        alt="image of a porche macan">
+    </div>
+    <br>
+    <h1>Check our latest car sales!</h1>
+    <div id="carAdscontainer"></div>
+    <script type="module" src="/src/main.js"></script>
+  </main>
 </body>
 </html>
