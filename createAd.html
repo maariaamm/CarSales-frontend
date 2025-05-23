@@ -2,24 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=>, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create/Edit Ad</title>
     <link rel="stylesheet" href="/src/style.scss">
+    <style>
+        .image-preview {
+            max-width: 300px;
+            max-height: 200px;
+            margin: 10px 0;
+        }
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
     <main>
-        <form id="upload-form" enctype="multipart/form-data">
-             <input type="text" name="brand" placeholder="Brand" required>
+        <script>
+            const token = localStorage.getItem('token');
+            if (!token) {
+              alert("You must be logged in to upload an ad!");
+              window.location.href = "/login.html";
+            }
+        </script>
+        <form id="upload-form">
+            <input type="hidden" name="adId" id="adId">
+            <input type="text" name="brand" placeholder="Brand" required>
             <input type="text" name="model" placeholder="Model" required>
-            <input type="text" name="Description" placeholder="Description" required>
+            <input type="text" name="description" placeholder="Description" required>
             <input type="number" name="year" placeholder="Year" required>
             <input type="text" name="fuelType" placeholder="Fuel Type" required>
             <input type="number" name="price" placeholder="Price" required>
-            <input type="file" name="imageUrl" required>
+            <input type="text" name="imageUrl" id="imageUrl" placeholder="Enter Image URL" required>
+            <div class="image-preview">
+                <img id="currentImage" src="" alt="Current image" style="display: none;">
+            </div>
             <button class="add-btn" type="submit">Upload ad</button>
-          </form>
-          <script type="module" src="/src/main.js"></script>
+        </form>
+        <script type="module" src="/src/main.js"></script>
 
+        <!-- Add preview functionality -->
+        <script>
+            const imageUrl = document.getElementById('imageUrl');
+            const currentImage = document.getElementById('currentImage');
+
+            imageUrl.addEventListener('input', function(e) {
+                const url = e.target.value;
+                if (url) {
+                    currentImage.src = url;
+                    currentImage.style.display = 'block';
+                } else {
+                    currentImage.style.display = 'none';
+                }
+            });
+
+            // Load existing data if editing
+            document.addEventListener('DOMContentLoaded', async () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const adId = urlParams.get('adId');
+                const token = localStorage.getItem('token');
+                const API_BASE = 'http://localhost:3000';
+
+                if (adId) {
+                    try {
+                        const res = await fetch(`${API_BASE}/api/carAds/${adId}`, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+                        const ad = await res.json();
+                        
+                        // Fill form fields
+                        document.getElementById('adId').value = ad._id;
+                        document.querySelector('[name="brand"]').value = ad.brand || '';
+                        document.querySelector('[name="model"]').value = ad.model;
+                        document.querySelector('[name="description"]').value = ad.description;
+                        document.querySelector('[name="year"]').value = ad.year;
+                        document.querySelector('[name="fuelType"]').value = ad.fuelType;
+                        document.querySelector('[name="price"]').value = ad.price;
+                        
+                        // Show current image if it exists
+                        if (ad.imageUrl) {
+                            document.getElementById('imageUrl').value = ad.imageUrl;
+                            currentImage.src = ad.imageUrl;
+                            currentImage.style.display = 'block';
+                        }
+
+                        // Update button text
+                        document.querySelector('.add-btn').textContent = 'Update Ad';
+                    } catch (err) {
+                        console.error('Error loading ad:', err);
+                        alert('Error loading ad details');
+                    }
+                }
+            });
+        </script>
     </main>
 </body>
 </html>
