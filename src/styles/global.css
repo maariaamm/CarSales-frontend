@@ -1,0 +1,92 @@
+@charset "UTF-8";
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Hompage */
+img {
+  display: flex;
+  margin: auto;
+  width: 80vw;
+  height: 65vh;
+  margin-top: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 30px;
+  z-index: 1000;
+}
+
+h1 {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  position: relative;
+  bottom: 10px;
+  left: 5px;
+  font-size: 35px;
+  color: #301c1c;
+}
+
+.nav {
+  display: flex;
+  justify-content: center; /* centrera horisontellt */
+  align-items: center; /* centrera vertikalt om behövs */
+  background-color: #171515;
+  overflow: hidden;
+  border-radius: 30px;
+  padding: 10px 0;
+  gap: 60px; /* valfritt mellanrum mellan länkar */
+  z-index: 1000;
+  margin-bottom: 30px; /* Add some space below the image */
+}
+
+/* Style the links inside the navigation bar */
+.nav a {
+  color: #f2f2f2;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.nav a:hover {
+  background-color: #301c1c;
+  color: black;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #301c1c;
+  margin-top: 100px;
+}
+/* Register account page*/
+.Register-form {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin: 0 auto; /* centrerar horisontellt */
+  gap: 15px;
+  height: 350px;
+  width: 300px;
+  margin: 0 auto; /* centrerar horisontellt */
+  padding: 20px;
+}
+
+.Register-form input {
+  padding: 15px;
+  border: 15px off-white #eeeeee;
+  border-radius: 10px;
+}
+
+.register-btn {
+  background-color: #301c1c;
+  color: rgb(253, 253, 253);
+  border-radius: 10px;
+  margin: 0, 15px, 0;
+  padding: 15px;
+  border: 15px;
+  font-size: 15px;
+}/*# sourceMappingURL=style.css.map */
