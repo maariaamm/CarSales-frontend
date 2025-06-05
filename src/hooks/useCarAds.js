@@ -1,25 +1,119 @@
-import { getAllAds } from '../api/carAds.js';
+import { getAllAds, createAd, deleteAd } from '../api/carAds.js';
+
 
 export async function renderAds(containerId) {
   const container = document.getElementById(containerId);
+  const loggedInUserId = localStorage.getItem('userId');
+
   if (!container) return;
 
   try {
     const ads = await getAllAds();
-    console.log('Fetched ads:', ads);
-    container.innerHTML = ads.map(ad => `
-      <div class="car-card">
-        <h2>${ad.model} ${ad.year}</h2>
-        <p><strong>Brand:</strong> ${ad.brand}</p>
-        <p><strong>model:</strong> ${ad.model} kr</p>
-        <p><strong>price:</strong> ${ad.price}</p>
-        <p><strong>year:</strong> ${ad.year}</p>
-        <p><strong>description:</strong> ${ad.description}</p>
-        <p><strong>fueltype:</strong> ${ad.fueltype}</p>
-        <img src="${ad.imageUrl}" alt="${ad.model}" />
-      </div>
-    `).join('');
+
+    container.innerHTML = ads.map(ad => {
+      let buttonsHTML = '';
+      if (loggedInUserId === ad.userId) {
+        buttonsHTML = `
+          <button class="edit-btn" data-id="${ad._id}">Edit</button>
+          <button class="delete-btn" data-id="${ad._id}">Delete</button>
+        `;
+      }
+
+      return `
+        <div class="car-card">
+          <h2>${ad.model} (${ad.year})</h2>
+          <p><strong>Brand:</strong> ${ad.brand}</p>
+          <p><strong>Price:</strong> ${ad.price} kr</p>
+          <p><strong>Description:</strong> ${ad.description}</p>
+          <img src="${ad.imageUrl}" alt="${ad.model}">
+          ${buttonsHTML}
+        </div>
+      `;
+    }).join('');
+
+    // add event listeners for edit
+    container.querySelectorAll('.edit-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const adId = e.target.dataset.id;
+        window.location.href = `/createAd.html?adId=${adId}`;
+      });
+    });
+
+    // add event listeners for delete
+    container.querySelectorAll('.delete-btn').forEach(button => {
+      button.addEventListener('click', async (e) => {
+        const adId = e.target.dataset.id;
+        if (confirm('Are you sure you want to delete this ad?')) {
+          try {
+            await deleteAd(adId);
+            alert('Ad deleted!');
+            renderAds(containerId); 
+          } catch (error) {
+            alert('Error deleting ad: ' + error.message);
+          }
+        }
+      });
+    });
+
   } catch (err) {
     container.innerHTML = `<p>Error loading ads: ${err.message}</p>`;
+  }
+}
+
+export function handleCreateAd(formElement) {
+  formElement.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const adData = {
+      brand: formElement.brand.value,
+      model: formElement.model.value,
+      description: formElement.description.value,
+      year: formElement.year.value,
+      fuelType: formElement.fuelType.value,
+      price: formElement.price.value,
+      imageUrl: formElement.imageUrl.value,
+    };
+
+    try {
+      await createAd(adData);
+      alert('Ad created!');
+      formElement.reset();
+      window.location.href = '/'; 
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error creating ad: ' + error.message);
+    }
+  });
+}
+
+// navbar if logged in
+const authLink = document.getElementById('auth-link');
+const token = localStorage.getItem('token');
+
+if (authLink) {
+  if (token) {
+    authLink.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      <span>Sign out</span>
+    `;
+    authLink.href = "#";
+    authLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      window.location.href = '/login.html'; 
+    });
+  } else {
+    authLink.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      <span>Sign in / register</span>
+    `;
+    authLink.href = "/login.html";
   }
 }
