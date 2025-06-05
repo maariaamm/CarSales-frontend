@@ -2,37 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Car Sales homepage</title>
+  <title>Login</title>
   <link rel="stylesheet" href="/styles/global.css">
 </head>
 <body>
   <main>
-    <div class="nav">
-      <a href="#carAdscontainer">All cars for sale</a>
-      <a href="/createAd" class="auth-required">Upload car Ad</a>
-      <a href="/login" class="auth-toggle">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
-          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
-        </svg>
-        <span>Sign in / register account</span>
-      </a>
-    </div>
-    <h1>Sign in</h1>
+    <h2>Login</h2>
+    <p>No account? <a href="/register.html">Register here</a>.</p>
     <form id="login-form">
-      <label>
-        Username:
-        <input type="text" name="username" required />
-      </label>
-      <label>
-        Password:
-        <input type="password" name="password" required />
-      </label>
-      <button type="submit">Login</button>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit" class="login-btn">Login</button>
     </form>
   </main>
-
   <script type="module" src="/js/main.js"></script>
 </body>
 </html>

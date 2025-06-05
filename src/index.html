@@ -10,8 +10,9 @@
   <main>
     <div class="nav">
       <a href="#carAdscontainer">All cars for sale</a>
-      <a href="/createAd" class="auth-required">Upload car Ad</a>
-      <a href="/login" class="auth-toggle">
+      <a href="/createAd.html" class="auth-required">Sell your car</a>
+      <a href="/myUploads.html" class="auth-required">My uploads</a>
+      <a href="/login.html" class="auth-toggle" id="auth-link">
         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
           <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
           <circle cx="12" cy="7" r="4" />
@@ -26,9 +27,7 @@
     <br>
     <h1>Check our latest car sales!</h1>
     <div id="carAdscontainer"></div>
-
-    <div id="ads-container"></div>
-    <script type="module" src="/js/main.js"></script>
+      <script type="module" src="/js/main.js"></script>
   </main>
 </body>
 </html>

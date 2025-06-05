@@ -43,7 +43,7 @@
         </form>
         <script type="module" src="/js/main.js"></script>
 
-        <!-- Add preview functionality -->
+        <!-- image preview functionality -->
         <script>
             const imageUrl = document.getElementById('imageUrl');
             const currentImage = document.getElementById('currentImage');
@@ -74,7 +74,7 @@
                         });
                         const ad = await res.json();
                         
-                        // Fill form fields
+                        
                         document.getElementById('adId').value = ad._id;
                         document.querySelector('[name="brand"]').value = ad.brand || '';
                         document.querySelector('[name="model"]').value = ad.model;
@@ -91,7 +91,7 @@
                         }
 
                         // Update button text
-                        document.querySelector('.add-btn').textContent = 'Update Ad';
+                        document.querySelector('.create-btn').textContent = 'Update Ad';
                     } catch (err) {
                         console.error('Error loading ad:', err);
                         alert('Error loading ad details');
