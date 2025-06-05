@@ -9,13 +9,15 @@ export function handleLogin(formElement) {
     try {
       const data = await login(username, password);
       localStorage.setItem('token', data.token);
-      alert("Login successful!");
-      window.location.href = "/userAccount.html";
+      alert('Login successful!');
+      window.location.href = '/';
     } catch (err) {
-      alert("Login failed: " + err.message);
+      alert('Login failed: ' + err.message);
     }
   });
 }
+
+
 
 export function handleRegister(formElement) {
   formElement.addEventListener('submit', async (e) => {
@@ -27,10 +29,10 @@ export function handleRegister(formElement) {
     try {
       const data = await register(username, email, password);
       localStorage.setItem('token', data.token);
-      alert("Registration successful!");
-      window.location.href = "/userAccount.html";
+      alert('Registration successful!');
+      window.location.href = '/';
     } catch (err) {
-      alert("Registration failed: " + err.message);
+      alert('Registration failed: ' + err.message);
     }
   });
 }
