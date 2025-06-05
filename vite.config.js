@@ -14,7 +14,13 @@ export default defineConfig({
         main: resolve(__dirname, 'src/index.html'),
         login: resolve(__dirname, 'src/login.html'),
         register: resolve(__dirname, 'src/register.html'),
+        createAd: resolve(__dirname, 'src/createAd.html'),
       },
     },
+  },
+  server: {
+    allowedHosts: [
+      'http://localhost:3000'
+    ]
   },
 });
