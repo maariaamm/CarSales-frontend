@@ -21,17 +21,17 @@ export async function renderAds(containerId) {
 
       return `
         <div class="car-card">
-          <h2>${ad.model} (${ad.year})</h2>
+          <h3>${ad.model} (${ad.year})</h3>
           <p><strong>Brand:</strong> ${ad.brand}</p>
           <p><strong>Price:</strong> ${ad.price} kr</p>
           <p><strong>Description:</strong> ${ad.description}</p>
-          <img src="${ad.imageUrl}" alt="${ad.model}">
+          <img src="${ad.imageUrl}" class="car-card-img" alt="${ad.model}">
           ${buttonsHTML}
         </div>
       `;
     }).join('');
 
-    // add event listeners for edit
+    //  event listeners for edit
     container.querySelectorAll('.edit-btn').forEach(button => {
       button.addEventListener('click', (e) => {
         const adId = e.target.dataset.id;
@@ -39,7 +39,7 @@ export async function renderAds(containerId) {
       });
     });
 
-    // add event listeners for delete
+    //  event listeners for delete
     container.querySelectorAll('.delete-btn').forEach(button => {
       button.addEventListener('click', async (e) => {
         const adId = e.target.dataset.id;
