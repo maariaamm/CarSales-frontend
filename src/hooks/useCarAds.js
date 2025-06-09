@@ -19,7 +19,7 @@ export async function renderAds(containerId, showJustMyAds) {
       .filter(ad => showJustMyAds && ad.user._id == user.id || !showJustMyAds)
       .map(ad => {
       let buttonsHTML = '';
-      if (user.id === ad.user._id) {
+      if (user && user.id === ad.user._id) {
         buttonsHTML = `
           <button class="edit-btn" data-id="${ad._id}">Edit</button>
           <button class="delete-btn" data-id="${ad._id}">Delete</button>
@@ -35,13 +35,15 @@ export async function renderAds(containerId, showJustMyAds) {
           <p><strong>fuelType:</strong> ${ad.fuelType}</p>
           <img src="${ad.imageUrl}" alt="${ad.model}">
           <button class="view-btn" data-id="${ad._id}">View Ad</button>
+          <input type="hidden" name="adId" value="" />
+
 
           ${buttonsHTML}
         </div>
       `;
     }).join('');
 
-    // add event listeners for view button
+    //  event listeners for view button
 container.querySelectorAll('.view-btn').forEach(button => {
   button.addEventListener('click', (e) => {
     const adId = e.target.dataset.id;
@@ -82,7 +84,7 @@ export function handleCreateAd(formElement) {
   formElement.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const adId = formElement.adId.value; // Kolla om adId finns
+    const adId = formElement.adId.value; 
 
     const adData = {
       brand: formElement.brand.value,
@@ -96,10 +98,10 @@ export function handleCreateAd(formElement) {
 
     try {
       if (adId) {
-        await updateAd(adId, adData); // PUT om adId finns
+        await updateAd(adId, adData); 
         alert('Ad updated!');
       } else {
-        await createAd(adData); // POST om ny annons
+        await createAd(adData); 
         alert('Ad created!');
       }
 
