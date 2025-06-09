@@ -62,11 +62,13 @@
             document.addEventListener('DOMContentLoaded', async () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const adId = urlParams.get('adId');
+                console.log('Ad ID:', adId);
                 const token = localStorage.getItem('token');
                 const API_BASE = 'http://localhost:3000';
 
                 if (adId) {
                     try {
+                        console.log(token, API_BASE, adId);
                         const res = await fetch(`${API_BASE}/api/carAds/${adId}`, {
                             headers: {
                                 'Authorization': `Bearer ${token}`
@@ -91,7 +93,7 @@
                         }
 
                         // Update button text
-                        document.querySelector('.create-btn').textContent = 'Update Ad';
+                        document.querySelector('.add-btn').textContent = 'Update Ad';
                     } catch (err) {
                         console.error('Error loading ad:', err);
                         alert('Error loading ad details');
