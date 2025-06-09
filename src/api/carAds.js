@@ -23,6 +23,8 @@ export function updateAd(id, adData) {
 }
 
 export function deleteAd(id) {
+  const token = localStorage.getItem('token');
+
   return apiFetch(`/api/carAds/${id}`, {
     method: 'DELETE',
     headers: {

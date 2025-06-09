@@ -12,5 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (createForm) handleCreateAd(createForm);
 
   const carAdsContainer = document.getElementById('carAdscontainer');
-  if (carAdsContainer) renderAds('carAdscontainer');
+  if (carAdsContainer) renderAds('carAdscontainer', false);
+
 });

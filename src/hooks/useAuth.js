@@ -9,6 +9,7 @@ export function handleLogin(formElement) {
     try {
       const data = await login(username, password);
       localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
       alert('Login successful!');
       window.location.href = '/';
     } catch (err) {
@@ -29,6 +30,7 @@ export function handleRegister(formElement) {
     try {
       const data = await register(username, email, password);
       localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
       alert('Registration successful!');
       window.location.href = '/';
     } catch (err) {

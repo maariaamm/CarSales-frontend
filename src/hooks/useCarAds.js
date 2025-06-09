@@ -1,18 +1,25 @@
 import { getAllAds, createAd, deleteAd } from '../api/carAds.js';
 
 
-export async function renderAds(containerId) {
+export async function renderAds(containerId, showJustMyAds) {
   const container = document.getElementById(containerId);
-  const loggedInUserId = localStorage.getItem('userId');
-
+  let user = localStorage.getItem('user');
+  if (user) {
+    const parsedUser = JSON.parse(user);
+    user = parsedUser;
+  }
   if (!container) return;
 
   try {
     const ads = await getAllAds();
 
-    container.innerHTML = ads.map(ad => {
+    console.log(user);
+
+    container.innerHTML = ads
+      .filter(ad => showJustMyAds && ad.user._id == user.id || !showJustMyAds)
+      .map(ad => {
       let buttonsHTML = '';
-      if (loggedInUserId === ad.userId) {
+      if (user.id === ad.user._id) {
         buttonsHTML = `
           <button class="edit-btn" data-id="${ad._id}">Edit</button>
           <button class="delete-btn" data-id="${ad._id}">Delete</button>
@@ -21,17 +28,18 @@ export async function renderAds(containerId) {
 
       return `
         <div class="car-card">
-          <h3>${ad.model} (${ad.year})</h3>
+          <h2>${ad.model} (${ad.year})</h2>
           <p><strong>Brand:</strong> ${ad.brand}</p>
           <p><strong>Price:</strong> ${ad.price} kr</p>
           <p><strong>Description:</strong> ${ad.description}</p>
-          <img src="${ad.imageUrl}" class="car-card-img" alt="${ad.model}">
+          <img src="${ad.imageUrl}" alt="${ad.model}">
           ${buttonsHTML}
         </div>
       `;
     }).join('');
 
-    //  event listeners for edit
+    
+    // add event listeners for edit
     container.querySelectorAll('.edit-btn').forEach(button => {
       button.addEventListener('click', (e) => {
         const adId = e.target.dataset.id;
@@ -39,7 +47,7 @@ export async function renderAds(containerId) {
       });
     });
 
-    //  event listeners for delete
+    // add event listeners for delete
     container.querySelectorAll('.delete-btn').forEach(button => {
       button.addEventListener('click', async (e) => {
         const adId = e.target.dataset.id;
@@ -47,7 +55,7 @@ export async function renderAds(containerId) {
           try {
             await deleteAd(adId);
             alert('Ad deleted!');
-            renderAds(containerId); 
+            renderAds(containerId, showJustMyAds);
           } catch (error) {
             alert('Error deleting ad: ' + error.message);
           }
