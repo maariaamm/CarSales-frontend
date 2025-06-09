@@ -1,4 +1,4 @@
-import { getAllAds, createAd, deleteAd } from '../api/carAds.js';
+import { getAllAds, createAd, deleteAd, updateAd } from '../api/carAds.js';
 
 
 export async function renderAds(containerId, showJustMyAds) {
@@ -32,14 +32,24 @@ export async function renderAds(containerId, showJustMyAds) {
           <p><strong>Brand:</strong> ${ad.brand}</p>
           <p><strong>Price:</strong> ${ad.price} kr</p>
           <p><strong>Description:</strong> ${ad.description}</p>
+          <p><strong>fuelType:</strong> ${ad.fuelType}</p>
           <img src="${ad.imageUrl}" alt="${ad.model}">
+          <button class="view-btn" data-id="${ad._id}">View Ad</button>
+
           ${buttonsHTML}
         </div>
       `;
     }).join('');
 
-    
-    // add event listeners for edit
+    // add event listeners for view button
+container.querySelectorAll('.view-btn').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const adId = e.target.dataset.id;
+    window.location.href = `/adDetails.html?adId=${adId}`;
+  });
+});
+
+    //  event listeners for edit
     container.querySelectorAll('.edit-btn').forEach(button => {
       button.addEventListener('click', (e) => {
         const adId = e.target.dataset.id;
@@ -47,7 +57,7 @@ export async function renderAds(containerId, showJustMyAds) {
       });
     });
 
-    // add event listeners for delete
+    //  event listeners for delete
     container.querySelectorAll('.delete-btn').forEach(button => {
       button.addEventListener('click', async (e) => {
         const adId = e.target.dataset.id;
@@ -72,6 +82,8 @@ export function handleCreateAd(formElement) {
   formElement.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    const adId = formElement.adId.value; // Kolla om adId finns
+
     const adData = {
       brand: formElement.brand.value,
       model: formElement.model.value,
@@ -83,13 +95,19 @@ export function handleCreateAd(formElement) {
     };
 
     try {
-      await createAd(adData);
-      alert('Ad created!');
+      if (adId) {
+        await updateAd(adId, adData); // PUT om adId finns
+        alert('Ad updated!');
+      } else {
+        await createAd(adData); // POST om ny annons
+        alert('Ad created!');
+      }
+
       formElement.reset();
-      window.location.href = '/'; 
+      window.location.href = '/';
     } catch (error) {
       console.error('Error:', error);
-      alert('Error creating ad: ' + error.message);
+      alert('Error saving ad: ' + error.message);
     }
   });
 }
