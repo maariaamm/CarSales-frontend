@@ -15,6 +15,8 @@ export default defineConfig({
         login: resolve(__dirname, 'src/login.html'),
         register: resolve(__dirname, 'src/register.html'),
         createAd: resolve(__dirname, 'src/createAd.html'),
+        adDetails: resolve(__dirname, 'src/adDetails.html'),
+        myUploads: resolve(__dirname, 'src/myUploads.html'),
       },
     },
   },
